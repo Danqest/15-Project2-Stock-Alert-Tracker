@@ -57,19 +57,61 @@
         </div>
       </div>
     </nav>
-    <main class="container container-fluid mt-5">
-      <!-- Render the sub layout -->
-      {{{ body }}}
+    <main class="container">
+      <table class="table border my-2">
+        <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Ticker</th>
+            <th scope="col">Buy/Sell</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Bid/Ask</th>
+            <th scope="col">Current</th>
+            <th scope="col">Open/Closed</th>
+            <th scope="col">Open Time</th>
+            <th scope="col">Closed Time</th>
+            <th scope="col">Trade Gain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">@will</th>
+            <td>AAPL</td>
+            <td>Long</td>
+            <td>100</td>
+            <td>150.50</td>
+            <td>150.00</td>
+            <td>Closed</td>
+            <td>9:50AM</td>
+            <td>10:50AM</td>
+            <td>90%</td>
+          </tr>
+          <tr>
+            <th scope="row">@harris</th>
+            <td>AMZN</td>
+            <td>Short</td>
+            <td>1000</td>
+            <td>125.50</td>
+            <td>150.00</td>
+            <td>Closed</td>
+            <td>9:50AM</td>
+            <td>10:50AM</td>
+            <td>90%</td>
+          </tr>
+          <tr>
+            <th scope="row">@colin</th>
+            <td>AMZN</td>
+            <td>Short</td>
+            <td>1000</td>
+            <td>150.50</td>
+            <td>150.00</td>
+            <td>Closed</td>
+            <td>9:50AM</td>
+            <td>10:50AM</td>
+            <td>90%</td>
+          </tr>
+        </tbody>
+      </table>
     </main>
-    <footer>
-      
-    </footer>
-  </div>
-
-  <!-- Render script for logged in users only -->
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
-</body>
-
+  </body>
 </html>
