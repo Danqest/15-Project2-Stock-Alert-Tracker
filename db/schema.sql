@@ -17,7 +17,7 @@ CREATE TABLE alerts (
     openclose BOOLEAN,
     opentime TIME, 
     closetime TIME, 
-    pnl PERCENTAGE,
+    pnl DECIMAL,
     PRIMARY KEY (id)  
 
 )
