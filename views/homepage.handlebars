@@ -1,24 +1,38 @@
-<!-- Loop over each object in the projects array -->
-{{#each projects as |project| }}
-<div class="row mb-4 project">
-  <div class="col-md-5">
-    <h2>
-      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-      {{{get_emoji}}}
-      <a href="/project/{{project.id}}">{{project.name}}</a>
-    </h2>
-    <p>
-      <span for="img" aria-label="money">💲</span>
-      <!-- Pass needed_funding value to the helper function -->
-      <span class="dollar-amount">{{format_amount project.needed_funding}}</span>
-      needed!
-    </p>
-    <p>Created by {{project.user.name}} on {{format_date project.date_created}}</p>
-  </div>
-  <div class="col-md-7">
-    <p>
-      {{project.description}}
-    </p>
-  </div>
-</div>
-{{/each}}
+<h1>Hard  code no database yet</h1>
+<table class="table border my-2">
+  <thead>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Ticker</th>
+            <th scope="col">Buy/Sell</th>
+            <th scope="col">Shares</th>
+            <th scope="col">Bid/Ask</th>
+            <th scope="col">Current</th>
+            <th scope="col">Open/Closed</th>
+            <th scope="col">Open Time</th>
+            <th scope="col">Closed Time</th>
+            <th scope="col">Trade Gain</th>
+          </tr>
+        </thead>
+</table>
+
+{{#each alertData as |alert|}}
+<table class="table border my-2">
+        
+        <tbody>
+          <tr>
+            <td>{{alert.username}}</td>
+            <td>{{alert.ticker}}</td>
+            <td>{{alert.command}}</td>
+            <td>{{alert.shares}}</td>
+            <td>{{alert.bidask}}</td>
+            <td>{{alert.current_price}}</td>
+            <td>{{alert.open}}</td>
+            <td>9:50AM</td>
+            <td>10:50AM</td>
+            <td>90%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {{/each}}
