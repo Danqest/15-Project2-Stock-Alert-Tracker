@@ -123,7 +123,7 @@ const Alerts = alertData.map((alert) => alert.get({plain: true}));
     ];
     res.render('dashboard', {
       userData,
-      logged_in: 
+      logged_in: true
     });
   } catch (err) {
     res.status(500).json(err);
