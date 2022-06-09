@@ -123,6 +123,12 @@ const Alerts = alertData.map((alert) => alert.get({plain: true}));
     ];
     res.render('dashboard', {
       userData,
+
+
+
+
+    res.render('homepage', {
+      alertData,
       logged_in: true
     });
   } catch (err) {
@@ -142,7 +148,7 @@ router.get('/create-alert', (req, res) => {
     logged_in: true
   });
 });
-//editing blog
+//editing alert
 router.get('/edit-alert', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   // if (req.session.logged_in) {
@@ -159,9 +165,36 @@ router.get('/edit-alert', (req, res) => {
     }
   ]
   res.render('edit-alert', {
-    blogs,
+    alerts,
     logged_in: true
   });
+
 });
+// ===================================================== 
+router.get('/dashboard', withAuth,  async (req, res) => {
+  try {
+    const userData = await User.findByPK(req.session.user_id, {
+      attributes: {exclude: ['password']},
+      // =================================================================change the model below
+      include: [{model: alerts}]
+    });
+  
+
+    const user = userData.get({plain: true});
+
+    console.log('user', user);
+
+res.render('dashboard', {
+  ...user,
+  alertData,
+  logged_in: req.session.logged_in,
+});
+
+}catch (err) {
+  res.status(500).json(err);
+}
+
+});
+
 
 module.exports = router;
