@@ -4,57 +4,62 @@ const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
-  //   // Get all projects and JOIN with user data
-  //   const projectData = await Project.findAll({
-  //     include: [
-  //       {
-  //         model: User,
-  //         attributes: ['name'],
-  //       },
-  //     ],
-  //   });
-const alertData = [
-  {
-    username: "will",
-    ticker: "AAPL",
-    command: "Long",
-    shares: 100,
-    bidask: 102,
-    current_price: 90,
-    open: true,
-    closed: false,
-    gain: "10",
-  },
-  {
-    username: "haris",
-    ticker: "AMZN",
-    command: "Long",
-    shares: 100,
-    bidask: 102,
-    current_price: 90,
-    open: true,
-    closed: false,
-    gain: "10",
-  },
-  {
-    username: "testddsd",
-    ticker: "tsla",
-    command: "Long",
-    shares: 100,
-    bidask: 102,
-    current_price: 90,
-    open: true,
-    closed: false,
-    gain: "10",
-  }
-];
+  //   // Get all Alerts and JOIN with user data
+    const alertData = await Alerts.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+
+      ],
+    });
+
+const Alerts = alertData.map((alert) => alert.get({plain: true}));
+
+
+// const alertData = [
+//   {
+//     username: "will",
+//     ticker: "AAPL",
+//     command: "Long",
+//     shares: 100,
+//     bidask: 102,
+//     current_price: 90,
+//     open: true,
+//     closed: false,
+//     gain: "10",
+//   },
+//   {
+//     username: "haris",
+//     ticker: "AMZN",
+//     command: "Long",
+//     shares: 100,
+//     bidask: 102,
+//     current_price: 90,
+//     open: true,
+//     closed: false,
+//     gain: "10",
+//   },
+//   {
+//     username: "testddsd",
+//     ticker: "tsla",
+//     command: "Long",
+//     shares: 100,
+//     bidask: 102,
+//     current_price: 90,
+//     open: true,
+//     closed: false,
+//     gain: "10",
+//   }
+// ];
     // Serialize data so the template can read it
     // const projects = projectData.map((project) => project.get({ plain: true }));
 
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       alertData, 
-      logged_in: true
+      logged_in: req.session.logged_in
     });
   } catch (err) {
     res.status(500).json(err);
@@ -93,6 +98,31 @@ const alertData = [
     // });
 
     // const user = userData.get({ plain: true });
+    const alerts = [
+      {
+      id: 1,
+      title: "title1",
+      content: "content1",
+      author: "author1",
+      date: "1/18/2022"
+      },
+      {
+        id: 2,
+        title: "title2",
+        content: "content2",
+        author: "author2",
+        date: "1/19/2022"
+      },
+      {
+          id: 3,
+          title: "title3",
+          content: "content3",
+          author: "author3",
+          date: "1/20/2022"
+      }
+    ];
+    res.render('dashboard', {
+      userData,
 
 
 
