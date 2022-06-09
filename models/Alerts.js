@@ -5,9 +5,21 @@ const sequelize = require('../config/connection');
 class Alert extends Model {}
     Alert.init (
         {
-            username: DataTypes.STRING,
-            ticker: DataTypes.STRING,
-            command: DataTypes.STRING,
+            id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                primaryKey: true,
+                autoIncrement: true,
+            },
+            username: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            ticker: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            buysell: DataTypes.STRING,
             shares: DataTypes.INTEGER,
             bidask: DataTypes.INTEGER,
             current_price: DataTypes.INTEGER,
