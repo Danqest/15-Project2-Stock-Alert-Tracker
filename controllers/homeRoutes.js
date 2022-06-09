@@ -93,31 +93,12 @@ const alertData = [
     // });
 
     // const user = userData.get({ plain: true });
-    const alerts = [
-      {
-      id: 1,
-      title: "title1",
-      content: "content1",
-      author: "author1",
-      date: "1/18/2022"
-      },
-      {
-        id: 2,
-        title: "title2",
-        content: "content2",
-        author: "author2",
-        date: "1/19/2022"
-      },
-      {
-          id: 3,
-          title: "title3",
-          content: "content3",
-          author: "author3",
-          date: "1/20/2022"
-      }
-    ];
-    res.render('dashboard', {
-      blogs,
+
+
+
+
+    res.render('homepage', {
+      alertData,
       logged_in: true
     });
   } catch (err) {
@@ -137,7 +118,7 @@ router.get('/create-alert', (req, res) => {
     logged_in: true
   });
 });
-//editing blog
+//editing alert
 router.get('/edit-alert', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   // if (req.session.logged_in) {
@@ -154,9 +135,36 @@ router.get('/edit-alert', (req, res) => {
     }
   ]
   res.render('edit-alert', {
-    blogs,
+    alerts,
     logged_in: true
   });
+
 });
+// ===================================================== 
+router.get('/dashboard', withAuth,  async (req, res) => {
+  try {
+    const userData = await User.findByPK(req.session.user_id, {
+      attributes: {exclude: ['password']},
+      // =================================================================change the model below
+      include: [{model: alerts}]
+    });
+  
+
+    const user = userData.get({plain: true});
+
+    console.log('user', user);
+
+res.render('dashboard', {
+  ...user,
+  alertData,
+  logged_in: req.session.logged_in,
+});
+
+}catch (err) {
+  res.status(500).json(err);
+}
+
+});
+
 
 module.exports = router;
