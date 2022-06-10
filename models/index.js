@@ -1,12 +1,13 @@
-const User = require('../models/User');
-const Alert = require('../models/Alerts');
-
+const User = require('./User');
+const Alert = require('./Alerts');
 
 User.hasMany(Alert, {
   foreignKey: 'user_id',
   onDelete: 'CASCADE'
 });
-Alert.belongsTo(User, {
-  foreignKey: 'user_id'
+User.belongsToMany(Alert, {
+  foreignKey: 'userId'
 });
+
+
 module.exports = { User, Alert };
