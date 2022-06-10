@@ -11,6 +11,13 @@ class Alert extends Model {}
                 primaryKey: true,
                 autoIncrement: true,
             },
+            // userId: {
+            //     type: DataTypes.INTEGER,
+            //     referencec : {
+            //         model: 'user',
+            //         key: 'id',
+            //     }
+            // },
             username: {
                 type: DataTypes.STRING,
                 allowNull: false,
@@ -19,17 +26,39 @@ class Alert extends Model {}
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            buysell: DataTypes.STRING,
-            shares: DataTypes.INTEGER,
-            bidask: DataTypes.INTEGER,
-            current_price: DataTypes.INTEGER,
-            open: true,
-            closed: false,
-            gain: DataTypes.INTEGER,
-
+            buysell: Boolean,
+            shares: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            }, 
+            bidask: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            current_price:{
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            startDate: {
+                type: DataTypes.DATE,
+                allowNull: false,
+              },
+            endDate: {
+                type: DataTypes.DATE,
+                allowNull: false,
+              },
+              pnl: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+            },
         },
+
         {
             sequelize,
+            timestamps: true,
+            freezeTableName: true,
+            underscored: true,
+            modelName: 'alert',
         }
     )
 
