@@ -15,7 +15,9 @@ const sendData = async (e) => {
             'content-type': 'application/json'
         },
         body: JSON.stringify(body)
+        
     });
+    
     const response = await fetchUser.json()
 
     console.log(response)
@@ -24,8 +26,7 @@ const sendData = async (e) => {
 
         window.location.pathname = '/'
     }
-
-    window.alert(response.message);
+    // window.alert(response.message);
 
 
     emailEl.value = "";

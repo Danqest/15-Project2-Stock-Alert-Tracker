@@ -6,7 +6,7 @@ const homeRoutes = require('./homeRoutes')
 
 routes.use('/', homeRoutes);
 routes.use('/api/user', userRoutes);
-routes.use('api/alert', alertRoutes)
+routes.use('/api/alert', alertRoutes)
 // routes.use('/comments', commentRoutes)
 
 module.exports = routes;

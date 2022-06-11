@@ -4,22 +4,35 @@ const path = require('path');
 const User = require('../../models/User');
 
 
+// get all user
+router.get('/', (req, res) => {
+  User.findAll({})
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
-// router.post('/', async (req, res) => {
-//   try {
-//     const userData = await User.create(req.body);
 
-//     //  to save user logged in and user id
-//     req.session.save(() => {
-//       req.session.user_id = userData.id;
-//       req.session.logged_in = true;
 
-//       res.status(200).json(userData);
-//     });
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+router.post('/', async (req, res) => {
+  try {
+    const userData = await User.create(req.body);
+
+    //  to save user logged in and user id
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 // the api/user/signup endpoint
 //sign up create new account Routes
@@ -38,7 +51,7 @@ router.post('/signup', async (req, res) => {
       console.log(userData)
       req.session.save(() => {
         req.session.loggedIn = true;
-        res.status(201).json({ message: `Register successed, Welcome ${userData.username} To Our Website!`});
+        res.json({ user: userData, message: `Register successed, Welcome ${userData.username} To Our Website!`, status: 201});
         return;
       });
 
@@ -74,7 +87,7 @@ router.post('/login', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.logged_in = req.session.logged_in;
       
-      res.json({ user: userData, message: 'You are now logged in!' });
+      res.json({ user: userData, message: 'You are now logged in!', status: 200, userInfo: userData  });
     });
   } catch (err) {
     res.status(400).json({message: 'Check email or password and try again'});

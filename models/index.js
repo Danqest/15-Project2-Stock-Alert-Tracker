@@ -5,9 +5,9 @@ const Comment = require('./Comment');
 // User.hasMany(Alert, {
 //   foreignKey: 'user_id'
 // });
-// Alert.belongsToMany(User, {
-//   foreignKey: 'user_id'
-// })
+Alert.belongsTo(User, {
+  foreignKey: 'user_id'
+})
 // User.hasMany(Comment, {
 //   foreignKey: 'user_id'
 // });

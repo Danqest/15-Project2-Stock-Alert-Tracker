@@ -21,18 +21,18 @@ const sendInformation = async (e) => {
         },
         body: JSON.stringify(signupBody)
     });
-    const response = await fetchSignup.json().then((data) => {
-        window.alert(data.message);
-
-        if(data.code === 201) {
+    const response = await fetchSignup.json()
+        // window.alert(data.message);
+        console.log(response)
+        if(response.status === 201) {
+            localStorage.setItem('user', JSON.stringify(response.userInfo))
             window.location.pathname = '/login'
         }
 
         createEmail.value = "";
         createPassword.value = "";
         createUsername.value = "";
-        // window.alert(`Email:${data.email} added sucessfully,Thank you for your signup,please register your information through sign in page`)
-    });
+
 
 }
 signupForm.addEventListener('submit', sendInformation);
