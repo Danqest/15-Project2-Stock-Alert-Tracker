@@ -1,10 +1,12 @@
-const router = require('express').Router();
-const userRoutes = require('./userRoutes');
-const alertRoutes = require('./alertRoutes');
-const commentRoutes = require('./api/commentRoutes.js')
+const routes = require('express').Router();
+const userRoutes = require('./api/userRoutes');
+const alertRoutes = require('./api/alertRoutes');
+const commentRoutes = require('./api/commentRoutes')
+const homeRoutes = require('./homeRoutes')
 
-routes.use('/user', userRoutes);
-routes.use('/events', alertRoutes)
-routes.use('/comments', commentRoutes)
+routes.use('/', homeRoutes);
+routes.use('/api/user', userRoutes);
+routes.use('api/alert', alertRoutes)
+// routes.use('/comments', commentRoutes)
 
-module.exports=routes;
+module.exports = routes;

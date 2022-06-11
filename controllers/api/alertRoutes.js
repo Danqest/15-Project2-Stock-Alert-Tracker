@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Comment, User, Event, Rsvp } = require('../../models');
+const { Comment, User, Alert, } = require('../../models');
 
-// Routes for '/api/events
+// Routes for '/api/Alerts
 
 // get all events
 router.get('/', (req, res) => {
-  Event.findAll({})
+  Alert.findAll({})
     .then((results) => {
       res.json(results);
     })
@@ -14,22 +14,15 @@ router.get('/', (req, res) => {
       res.status(500).json(err);
     });
 });
-// create an event
+// create an Alert
 router.post('/', (req, res) => {
-  Event.create({
-    location: req.body.location,
-    state: req.body.state,
-    category: req.body.category,
-    startTime: req.body.startTime,
-    endTime: req.body.endTime,
-    startDate: req.body.startDate,
-    endDate: req.body.endDate,
-    description: req.body.description,
-    hostId: req.body.hostId,// we must have hostID in request body 
+  Alert.create({
+    //
+
   })
     .then((results) => {
       res.json({
-        message: 'Event created successfully',
+        message: 'Alert created successfully',
       });
     })
     .catch((err) => {
@@ -38,22 +31,19 @@ router.post('/', (req, res) => {
     });
 });
 
-// get specific event/ event page
+// get specific Alert/ Alert page
 router.get('/:id', (req, res) => {
-  Event.findOne({
+  Alert.findOne({
     where: {
       id: req.params.id,
     },
-    // include: [
-    //   { model: User, through: Rsvp, as: 'Attendees' },
-    //   { model: Comment },
-    // ],
+    
   })
     .then((results) => {
       // if no results, respond with 404 and inform user no results found for that ID
       if (!results) {
         res.status(404).json({
-          message: `No event found with ID ${req.params.id} found. Please try again with a different ID.`,
+          message: `No Alert found with ID ${req.params.id} found. Please try again with a different ID.`,
         });
         return;
       }
@@ -66,9 +56,9 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// delete an event
+// delete an Alert
 router.delete('/:id', (req, res) => {
-  Event.destroy({
+  Alert.destroy({
     where: {
       id: req.params.id,
     },
@@ -77,12 +67,12 @@ router.delete('/:id', (req, res) => {
       // if there are no results, set status to 404 and inform user that ID is not found
       if (!results) {
         res.status(404).json({
-          message: `No event with Id ${req.params.id} found. Please try again with different ID.`,
+          message: `No Alert with Id ${req.params.id} found. Please try again with different ID.`,
         });
         return;
       }
       // else, respond with results
-      res.json({ message: 'Event deleted successfully' });
+      res.json({ message: 'Alert deleted successfully' });
     })
     .catch((err) => {
       console.log(err);
@@ -90,18 +80,11 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-// update an event
+// update an Alert
 router.put('/:id', (req, res) => {
-  Event.update(
+  Alert.update(
     {
-      location: req.body.location,
-      state: req.body.state,
-      category: req.body.category,
-      startTime: req.body.startTime,
-      endTime: req.body.endTime,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate,
-      description: req.body.description,
+      
     },
     {
       where: {
