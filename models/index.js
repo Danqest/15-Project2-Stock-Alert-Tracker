@@ -2,6 +2,10 @@ const User = require('./User');
 const Alert = require('./Alert');
 const Comment = require('./Comment');
 
+Alert.belongsTo(User, {
+  foreignKey: 'user_id'
+})
+
 // User.hasMany(Alert, {
 //   foreignKey: 'user_id'
 // });

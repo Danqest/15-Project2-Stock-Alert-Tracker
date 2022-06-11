@@ -3,7 +3,17 @@ const session = require('express-session');
 const path = require('path');
 const User = require('../../models/User');
 
-
+// get all user
+router.get('/', (req, res) => {
+  User.findAll({})
+    .then((results) => {
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // router.post('/', async (req, res) => {
 //   try {

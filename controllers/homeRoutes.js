@@ -1,12 +1,37 @@
 const routes = require('express').Router();
-const { Alerts, User, Comment } = require('../models');
+const { Alert, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 const path=require('path')
 
-//get the Homepage routes from the homepage handlebars
 routes.get('/',async (req,res)=>{
-  res.render('homepage')
-})
+  try {
+    // Get all posts and JOIN with user data
+    const alertData = await Alert.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
+
+    // Serialize data so the template can read it
+    const alerts = alertData.map((alert) => alert.get({ plain: true }));
+
+
+    // Pass serialized data and session flag into template
+    console.log('alerts', alerts);
+    res.render('homepage', {
+      alerts,
+      logged_in: req.session.logged_in,
+    });
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err);
+  
+  }
+});
 //get the login page from handlebars
 routes.get('/login',async (req,res)=>{
   res.render('login')

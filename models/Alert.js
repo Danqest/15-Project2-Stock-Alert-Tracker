@@ -35,14 +35,14 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            start_time: {
-                type: DataTypes.DATE,
-                allowNull: false,
-              },
-            end_time: {
-                type: DataTypes.DATE,
-                allowNull: false,
-              },
+            // start_time: {
+            //     type: DataTypes.DATE,
+            //     allowNull: false,
+            //   },
+            // end_time: {
+            //     type: DataTypes.DATE,
+            //     allowNull: false,
+            //   },
               profit_or_loss: {
                 type: DataTypes.INTEGER,
                 allowNull: true,
