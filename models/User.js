@@ -2,7 +2,6 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 // import our database connection from config.js
-
 const sequelize = require('../config/connection');
 
 class User extends Model {
@@ -27,9 +26,9 @@ User.init ({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: [10],
-          },
+        // validate: {
+        //     len: [10],
+        //   },
     },
     email: {
         type: DataTypes.STRING,

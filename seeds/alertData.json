@@ -1,22 +1,13 @@
 [
   {
     "ticker": "AAPL",
-    "buysell": "Buy Long",
+    "entry": "Buy Long",
     "shares": 1000,
-    "bidask": 135.00,
+    "entry_price": 135.00,
     "current_price": 130.00,
-    "startDate": "06/09/2022",
-    "endDate": "06/10/2022",
-    "pnl": "70%"
-  },
-  {
-    "ticker": "AAPL2",
-    "buysell": "Buy Long",
-    "shares": 1000,
-    "bidask": 135.00,
-    "current_price": 130.00,
-    "startDate": "06/09/2022",
-    "endDate": "06/10/2022",
-    "pnl": "70%"
+    "start_time": "06/09/2022",
+    "end_time": "06/10/2022",
+    "profit_or_loss": 70,
+    "user_id" : 1
   }
 ]

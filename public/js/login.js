@@ -1,53 +1,35 @@
-const loginFormHandler = async (event) => {
-    event.preventDefault();
-  
-    // Collect values from the login form
-    const username = document.querySelector('#email-login').value.trim();
-    const password = document.querySelector('#password-login').value.trim();
-  
-    if (username && password) {
-      // Send a POST request to the API endpoint
-      const response = await fetch('/api/users/login', {
+// login DOM
+const emailEl = document.getElementById('email_login');
+const passwordEl = document.getElementById('password_login');
+const loginForm = document.getElementById('loginform');
+
+const sendData = async (e) => {
+    e.preventDefault();
+    const body = {
+        email: emailEl.value.trim(),
+        password: passwordEl.value.trim()
+    };
+    const fetchUser = await fetch('/api/user/login', {
         method: 'POST',
-        body: JSON.stringify({ username, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        // If successful, redirect the browser to the profile page
-        document.location.replace('/dashboard');
-      } else {
-        alert(response.statusText);
-      }
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+    const response = await fetchUser.json()
+
+    console.log(response)
+    if(response.status === 200) {
+        localStorage.setItem('user', JSON.stringify(response.userInfo))
+
+        window.location.pathname = '/'
     }
-  };
-  
-  const signupFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const name = document.querySelector('#name-signup').value.trim();
-    const email = document.querySelector('#email-signup').value.trim();
-    const password = document.querySelector('#password-signup').value.trim();
-  
-    if (name && email && password) {
-      const response = await fetch('/api/users', {
-        method: 'POST',
-        body: JSON.stringify({ name, email, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        document.location.replace('/dashboard');
-      } else {
-        alert(response.statusText);
-      }
-    }
-  };
-  
-  document
-    .querySelector('.login-form')
-    .addEventListener('submit', loginFormHandler);
-  
-  document
-    .querySelector('.signup-form')
-    .addEventListener('submit', signupFormHandler);
+
+    window.alert(response.message);
+
+
+    emailEl.value = "";
+    passwordEl.value = "";
+
+} 
+loginForm.addEventListener('submit', sendData);

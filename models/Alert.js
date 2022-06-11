@@ -11,27 +11,23 @@ class Alert extends Model {}
                 primaryKey: true,
                 autoIncrement: true,
             },
-            // userId: {
-            //     type: DataTypes.INTEGER,
-            //     referencec : {
-            //         model: 'user',
-            //         key: 'id',
-            //     }
+            // username: {
+            //     type: DataTypes.STRING,
+            //     allowNull: false,
             // },
-            username: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
             ticker: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            buysell: Boolean,
+            entry: { //long or short
+                type: DataTypes.STRING,
+                allowNull: false,
+              },
             shares: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             }, 
-            bidask: {
+            entry_price: { 
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
@@ -39,18 +35,26 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            startDate: {
+            start_time: {
                 type: DataTypes.DATE,
                 allowNull: false,
               },
-            endDate: {
+            end_time: {
                 type: DataTypes.DATE,
                 allowNull: false,
               },
-              pnl: {
+              profit_or_loss: {
                 type: DataTypes.INTEGER,
                 allowNull: true,
             },
+            user_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                  model: 'user',
+                  key: 'id',
+                },
+              },
         },
 
         {

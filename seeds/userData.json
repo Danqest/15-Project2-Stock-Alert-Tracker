@@ -1,18 +1,7 @@
 [
     {
-      "username": "Harris",
+      "username": "testing",
+      "email": "testing@testing.com",
       "password": "password12345"
-    },
-    {
-      "username": "Will",
-      "password": "password12345"
-    },
-    {
-      "username": "Colin",
-      "password": "password12345"
-    },
-    {
-        "username": "Charnay",
-        "password": "password12345"
-      }
+    }
   ]
