@@ -2,35 +2,35 @@
 <table class="table border my-2">
   <thead>
           <tr>
-            <th scope="col">User</th>
+            {{!-- <th scope="col">User</th> --}}
             <th scope="col">Ticker</th>
-            <th scope="col">Buy/Sell</th>
+            <th scope="col">Entry</th>
             <th scope="col">Shares</th>
             <th scope="col">Bid/Ask</th>
             <th scope="col">Current</th>
             <th scope="col">Open/Closed</th>
-            <th scope="col">Open Time</th>
-            <th scope="col">Closed Time</th>
-            <th scope="col">Trade Gain</th>
+            {{!-- <th scope="col">Open Time</th> --}}
+            {{!-- <th scope="col">Closed Time</th>
+            <th scope="col">Trade Gain</th> --}}
           </tr>
         </thead>
 </table>
 
-{{#each alertData as |alert|}}
+{{#each alerts as |alert|}}
 <table class="table border my-2">
         
         <tbody>
           <tr>
-            <td>{{alert.username}}</td>
             <td>{{alert.ticker}}</td>
-            <td>{{alert.command}}</td>
+
+            <td>{{alert.entry}}</td>
             <td>{{alert.shares}}</td>
-            <td>{{alert.bidask}}</td>
+            <td>{{alert.entry_price}}</td>
             <td>{{alert.current_price}}</td>
-            <td>{{alert.open}}</td>
-            <td>9:50AM</td>
+            <td>10:00</td>
+            {{!-- <td>9:50AM</td>
             <td>10:50AM</td>
-            <td>90%</td>
+            <td>90%</td> --}}
           </tr>
         </tbody>
       </table>
@@ -38,5 +38,5 @@
       {{/each}}
 
 
-
+ {{!-- <script src="./js/homepage.js"></script> --}}
 
