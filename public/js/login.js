@@ -25,7 +25,7 @@ const sendData = async (e) => {
         window.location.pathname = '/'
     }
 
-    window.alert(response.message);
+    // window.alert(response.message);
 
 
     emailEl.value = "";

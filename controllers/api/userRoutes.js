@@ -38,7 +38,7 @@ router.post('/signup', async (req, res) => {
       console.log(userData)
       req.session.save(() => {
         req.session.loggedIn = true;
-        res.status(201).json({ message: `Register successed, Welcome ${userData.username} To Our Website!`});
+        res.json({ message: `Register successed, Welcome ${userData.username} To Our Website!`, status:201});
         return;
       });
 
@@ -74,7 +74,8 @@ router.post('/login', async (req, res) => {
       req.session.user_id = userData.id;
       req.session.logged_in = req.session.logged_in;
       
-      res.json({ user: userData, message: 'You are now logged in!' });
+      
+      res.json({ user: userData, message: 'You are now logged in!', status:200});
     });
   } catch (err) {
     res.status(400).json({message: 'Check email or password and try again'});
