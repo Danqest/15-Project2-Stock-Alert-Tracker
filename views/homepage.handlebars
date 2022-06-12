@@ -1,19 +1,19 @@
 
 
-{{#if loggedIn}}
+
 {{#each alerts as |alert|}}
-<table class="table border my-2">
+<table class="table table-responsive border my-2">
   <thead class="table-dark">
           <tr>
             <th scope="col">User</th>
             <th scope="col">Ticker</th>
-            <th scope="col">Entry</th>
-            <th scope="col">Entry Price</th>
+            <th scope="col">Entry(LONG/SHORT)</th>
+            <th scope="col">Entry | Target | Stoploss)</th>
             <th scope="col">Current Price</th>
             <th scope="col">Status</th>
             <th scope="col">Time</th>
-            {{!-- <th scope="col">Closed Time</th>
-            <th scope="col">Trade Gain</th> --}}
+            <th scope="col">Gain/Loss</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -21,17 +21,20 @@
             <td>{{alert.user.username}}</td>
             <td>{{alert.ticker}}</td>
             <td>{{alert.entry}}</td>
-            <td>{{alert.entry_price}}</td>
-            <td>{{alert.current_price}}</td>
-            <td>{{alert.status}}</td>
+            <td><span for="img" aria-label="price">💲</span>{{alert.entry_price}} <span for="img" aria-label="target">🎯</span>{{alert.target}}<span for="img" aria-label="stoploss">🛑</span>{{alert.stoploss}}  
+            </td>
+            <td><span for="img" aria-label="price">💲</span>{{alert.current_price}}</td>
+            <td>{{alert.status}} 
+               {{#if closed_price}}
+              <span class="closed-price" for="img" aria-label="price">💲{{alert.closed_price}}</span>
+              {{/if}}
+              </td>
             <td>{{format_time alert.createdAt}} {{format_date alert.createdAt}}</td>
+            <td>..</td>
           </tr>
         </tbody>
       </table>
       {{/each}}
 
-      {{else}}
-      <a href="/login">You must to login to view the alert</a>
-      {{/if}}
  {{!-- <script src="./js/homepage.js"></script> --}}
 

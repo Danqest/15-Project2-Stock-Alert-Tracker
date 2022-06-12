@@ -22,6 +22,8 @@ router.post('/', (req, res) => {
     ticker: req.body.ticker,
     entry: req.body.entry,
     entry_price: req.body.entry_price,
+    target: req.body.target,
+    stoploss: req.body.stoploss,
     current_price: req.body.current_price,
     status: req.body.status,
     // created_at: req.body.created_at,
@@ -64,7 +66,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// delete an Alert
+// delete an Alert by id
 router.delete('/:id', (req, res) => {
   Alert.destroy({
     where: {
@@ -92,14 +94,25 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   Alert.update(
     {
-      
+      closed_price: req.body.closed_price,
+      status: req.body.status,
+      profit_or_loss: req.body.profit_or_loss,
     },
     {
       where: {
         id: req.params.id,
       },
     }
-  );
+  )
+  .then((results) => {
+    res.json({
+      message: 'Alert update successfully',
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 module.exports = router;

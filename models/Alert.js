@@ -31,6 +31,14 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            target: { 
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+            stoploss: { 
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             current_price:{
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -39,6 +47,10 @@ class Alert extends Model {}
                 type: DataTypes.STRING,
                 allowNull: false,
             }, 
+            closed_price:{
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
             // start_time: {
             //     type: DataTypes.DATE,
             //     allowNull: false,
