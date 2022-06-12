@@ -15,21 +15,25 @@ router.get('/', (req, res) => {
     });
 });
 
-// router.post('/', async (req, res) => {
-//   try {
-//     const userData = await User.create(req.body);
+router.post('/', async (req, res) => {
+  try {
+    const userData = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    });
 
-//     //  to save user logged in and user id
-//     req.session.save(() => {
-//       req.session.user_id = userData.id;
-//       req.session.logged_in = true;
+    //  to save user logged in and user id
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.loggedIn = true;
 
-//       res.status(200).json(userData);
-//     });
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 // the api/user/signup endpoint
 //sign up create new account Routes
@@ -45,7 +49,7 @@ router.post('/signup', async (req, res) => {
           res.status(404).json({ message: 'Please filled all the required and try again' })
           return
       }
-      console.log(userData)
+      // console.log(userData)
       req.session.save(() => {
         req.session.loggedIn = true;
         res.json({ message: `Register successed, Welcome ${userData.username} To Our Website!`, status:201});
@@ -80,9 +84,10 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    // Once the user successfully logs in, set up the sessions variable 'loggedIn'
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.logged_in = req.session.logged_in;
+      req.session.loggedIn = req.session.loggedIn;
       
       
       res.json({ user: userData, message: 'You are now logged in!', status:200});
@@ -93,10 +98,9 @@ router.post('/login', async (req, res) => {
   console.log({message:'/api/user/login POST routes had run'})
 });
 
-
-
+// Logout
 router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
+  if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
     });

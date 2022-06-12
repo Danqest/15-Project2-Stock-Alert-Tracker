@@ -5,7 +5,7 @@ const path=require('path')
 
 routes.get('/',async (req,res)=>{
   try {
-    // Get all posts and JOIN with user data
+    // Get all alerts and JOIN with user data
     const alertData = await Alert.findAll({
       include: [
         {
@@ -23,7 +23,7 @@ routes.get('/',async (req,res)=>{
     console.log('alerts', alerts);
     res.render('homepage', {
       alerts,
-      logged_in: req.session.logged_in,
+      loggedIn: req.session.loggedIn,
     });
 
   } catch (err) {
@@ -36,10 +36,14 @@ routes.get('/',async (req,res)=>{
 routes.get('/login',async (req,res)=>{
   res.render('login')
 })
+// routes.get('/logout',async (req,res)=>{
+//   res.render('login')
+// })
 //get the signup page from handlebars
 routes.get('/signup',async (req,res)=>{
   res.render('signup')
 })
+
 // routes.get('/signup',(req,res)=>{
 //   res.sendFile(path.join(__dirname,'../views/signup.html'))
 // })

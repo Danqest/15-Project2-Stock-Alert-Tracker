@@ -23,10 +23,10 @@ class Alert extends Model {}
                 type: DataTypes.STRING,
                 allowNull: false,
               },
-            shares: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            }, 
+            // shares: {
+            //     type: DataTypes.INTEGER,
+            //     allowNull: false,
+            // }, 
             entry_price: { 
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -35,6 +35,10 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            status: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            }, 
             // start_time: {
             //     type: DataTypes.DATE,
             //     allowNull: false,

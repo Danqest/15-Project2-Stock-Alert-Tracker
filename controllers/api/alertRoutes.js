@@ -21,9 +21,9 @@ router.post('/', (req, res) => {
   Alert.create({
     ticker: req.body.ticker,
     entry: req.body.entry,
-    shares: req.body.shares,
     entry_price: req.body.entry_price,
     current_price: req.body.current_price,
+    status: req.body.status,
     // created_at: req.body.created_at,
     user_id: req.body.user_id, //requrire to include 
 
