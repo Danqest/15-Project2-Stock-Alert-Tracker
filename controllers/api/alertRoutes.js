@@ -1,10 +1,7 @@
 const router = require('express').Router();
 const { Comment, User, Alert, } = require('../../models');
-
-// Routes for '/api/Alerts
-
-// Routes for '/api/Alerts
-
+const withAuth = require('../../utils/auth');
+// Routes for '/api/alert
 // get all alert
 router.get('/', (req, res) => {
   Alert.findAll({})
@@ -16,31 +13,20 @@ router.get('/', (req, res) => {
       res.status(500).json(err);
     });
 });
+
 // create an Alert
-router.post('/', (req, res) => {
-  Alert.create({
-    ticker: req.body.ticker,
-    entry: req.body.entry,
-    entry_price: req.body.entry_price,
-    target: req.body.target,
-    stoploss: req.body.stoploss,
-    current_price: req.body.current_price,
-    status: req.body.status,
-    // created_at: req.body.created_at,
-    user_id: req.body.user_id, //requrire to include 
-
-  })
-    .then((results) => {
-      res.json({
-        message: 'Alert created successfully',
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+router.post('/', withAuth, async (req, res) => {
+  try {
+    const newAlert = await Alert.create({
+      ...req.body,
+      user_id: req.session.user_id,
     });
-});
 
+    res.status(200).json(newAlert);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 // get specific Alert/ Alert page
 router.get('/:id', (req, res) => {
   Alert.findOne({
@@ -67,10 +53,11 @@ router.get('/:id', (req, res) => {
 });
 
 // delete an Alert by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id',withAuth, (req, res) => {
   Alert.destroy({
     where: {
       id: req.params.id,
+      user_id: req.session.user_id,
     },
   })
     .then((results) => {
@@ -90,17 +77,19 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-// update an Alert
+// update an Alert (we using this to closed the alert)
 router.put('/:id', (req, res) => {
   Alert.update(
     {
+      close_entry: req.body.close_entry,
       closed_price: req.body.closed_price,
       status: req.body.status,
-      profit_or_loss: req.body.profit_or_loss,
+      // profit_or_loss: req.body.profit_or_loss,
     },
     {
       where: {
         id: req.params.id,
+        user_id: req.session.user_id,
       },
     }
   )

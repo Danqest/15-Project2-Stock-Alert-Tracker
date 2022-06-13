@@ -23,6 +23,11 @@ class Alert extends Model {}
                 type: DataTypes.STRING,
                 allowNull: false,
               },
+            close_entry: { //sell or buy to close
+                type: DataTypes.STRING,
+                allowNull: false,
+                defaultValue: false,
+              },
             // shares: {
             //     type: DataTypes.INTEGER,
             //     allowNull: false,
@@ -39,17 +44,18 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            current_price:{
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
+            // current_price:{
+            //     type: DataTypes.INTEGER,
+            //     allowNull: false,
+            // },
             status: {
                 type: DataTypes.STRING,
                 allowNull: false,
             }, 
             closed_price:{
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
+                defaultValue: false,
             },
             // start_time: {
             //     type: DataTypes.DATE,

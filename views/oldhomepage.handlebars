@@ -1,0 +1,36 @@
+<table class="table table-responsive border my-2">
+  <thead class="table-dark">
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Ticker</th>
+            <th scope="col">Entry(LONG/SHORT)</th>
+            <th scope="col">Entry | Target | Stoploss</th>
+            {{!-- <th scope="col">Current Price</th> --}}
+            <th scope="col">Status</th>
+            <th scope="col">Time</th>
+            {{#if username}}
+            <th scope="col"></th>
+            {{/if}}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{alert.user.username}}</td>
+            <td><a data-id="{{id}}" href="/alert/{{alert.id}}">{{alert.ticker}}</a></td>
+            <td>{{alert.entry}}</td>
+            <td><span for="img" aria-label="price">💲</span>{{alert.entry_price}} <span for="img" aria-label="target">🎯</span>{{alert.target}}<span for="img" aria-label="stoploss">🛑</span>{{alert.stoploss}}  
+            </td>
+            <td>{{alert.status}} 
+               {{#if closed_price}}
+              <span>@{{alert.closed_price}}</span> <span>{{alert.profit_or_loss}}</span>
+              {{/if}}
+              </td>
+            <td>{{format_time alert.createdAt}} {{format_date alert.createdAt}}</td>
+              
+            {{!-- <th scope="col"><a id="delete-alert" data-id="{{id}}" href="/alert/{{alert.id}}">Delete</a>
+            
+            </th> --}}
+            
+          </tr>
+        </tbody>
+      </table>

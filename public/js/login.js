@@ -2,34 +2,25 @@
 const emailEl = document.getElementById('email_login');
 const passwordEl = document.getElementById('password_login');
 const loginForm = document.getElementById('loginform');
-
+console.log('Login')
 const sendData = async (e) => {
     e.preventDefault();
     const body = {
         email: emailEl.value.trim(),
         password: passwordEl.value.trim()
     };
-    const fetchUser = await fetch('/api/user/login', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    });
-    const response = await fetchUser.json()
-
-    console.log(response)
-    if(response.status === 200) {
-        localStorage.setItem('user', JSON.stringify(response.userInfo))
-
-        window.location.pathname = '/'
-    }
-
-    // window.alert(response.message);
-
-
-    emailEl.value = "";
-    passwordEl.value = "";
-
-} 
+    if (body) {
+        const response = await fetch('/api/user/login', {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (response.ok) {
+          document.location.replace('/');
+        } else {
+          alert('Please check you password & try again.');
+        }
+      }
+    };
 loginForm.addEventListener('submit', sendData);

@@ -4,44 +4,25 @@ const entryEl = document.querySelector('#entry');
 const entryPriceEl = document.querySelector('#entry-price');
 const targetEl = document.querySelector('#target');
 const stoplossEl = document.querySelector('#stoploss');
-const currentPriceEl = document.querySelector('#current-price');
+const userID = document.querySelector('#userId');
+// const currentPriceEl = document.querySelector('#current-price');
 const alertSubmitButton = document.querySelector('#alert-submit')
-
-
- ///get all the alert data to table
- const getOnlineAPI  = async () => {
-    const response = await fetch(`https://financialmodelingprep.com/api/v3/quote-short/AAPL?apikey=${apiKey}`);
-  
-    const data = await response.json();
-  
-    console.log(data);
-  }
-  getOnlineAPI();
-
-// Get user's item from localstorage
-// const user = JSON.parse(localStorage.getItem('user'));
-// if(!user) {
-//     alert('please login')
-// // if user not logged in, redierect then to the logIn page
-//     window.location.pathname = '/login'
-// }
 
 //function for submission 
 const createAlert = async (e) =>{
     e.preventDefault();
     const alertBody = {
-        user_id: 1,
-        ticker: tickerEl.value.trim(),
+        // user_id: user_id, no need enter here because it get from the loggedIn user id
+        ticker: tickerEl.value.trim().toUpperCase(),
         entry: entryEl.value,
         entry_price: entryPriceEl.value,
         target: targetEl.value,
         stoploss: stoplossEl.value,
-        current_price: entryPriceEl.value,
         status: "OPEN",
         // profit_or_loss: eventDescription.value,
     };
 
-    console.log(alertBody)
+    // console.log(alertBody)
 
     // sending event details to the server using POST request
     const fetchNewEvent = await fetch('/api/alert', {

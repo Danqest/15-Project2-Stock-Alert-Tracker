@@ -15,25 +15,25 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const userData = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-    });
+// router.post('/', async (req, res) => {
+//   try {
+//     const userData = await User.create({
+//       username: req.body.username,
+//       email: req.body.email,
+//       password: req.body.password,
+//     });
 
-    //  to save user logged in and user id
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.loggedIn = true;
+//     //  to save user logged in and user id
+//     req.session.save(() => {
+//       req.session.user_id = userData.id;
+//       req.session.loggedIn = true;
 
-      res.status(200).json(userData);
-    });
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+//       res.status(200).json(userData);
+//     });
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 
 // the api/user/signup endpoint
 //sign up create new account Routes
@@ -51,7 +51,7 @@ router.post('/signup', async (req, res) => {
       }
       // console.log(userData)
       req.session.save(() => {
-        req.session.loggedIn = true;
+        // req.session.loggedIn = true;
         res.json({ message: `Register successed, Welcome ${userData.username} To Our Website!`, status:201});
         return;
       });
@@ -64,38 +64,43 @@ router.post('/signup', async (req, res) => {
 
 // login route
 //check user info through signin page
+// Login
 router.post('/login', async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const dbUserData = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
 
-    if (!userData) {
+    if (!dbUserData) {
       res
         .status(400)
-        .json({ message: 'The email not found, please try diffrent email' });
+        .json({ message: 'Incorrect email or password. Please try again!' });
       return;
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
+    const validPassword = await dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'Incorrect password, please try again' });
+        .json({ message: 'Incorrect email or password. Please try again!' });
       return;
     }
 
-    // Once the user successfully logs in, set up the sessions variable 'loggedIn'
     req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.loggedIn = req.session.loggedIn;
-      
-      
-      res.json({ user: userData, message: 'You are now logged in!', status:200});
+      req.session.loggedIn = true;
+      req.session.user_id = dbUserData.id;
+
+      res
+        .status(200)
+        .json({ user: dbUserData, message: 'You are now logged in!' });
     });
   } catch (err) {
-    res.status(400).json({message: 'Check email or password and try again'});
+    console.log(err);
+    res.status(500).json(err);
   }
-  console.log({message:'/api/user/login POST routes had run'})
 });
 
 // Logout

@@ -22,4 +22,13 @@ module.exports = {
       return `<span for="img" aria-label="gear">⚙️</span>`;
     }
   },
+
+
+  // closedbutton: ('isApplyNow', function(block) {
+  //   if(this.username == "Apply Now") {
+  //     return block(this);
+  //   } else {
+  //     return block.inverse(this);
+  //   }
+  // })
 };

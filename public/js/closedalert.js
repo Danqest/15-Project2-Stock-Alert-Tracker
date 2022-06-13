@@ -1,31 +1,34 @@
+const closedButton = document.querySelector('#close-alert-submit')
+const closedPriceEl = document.querySelector('#closed-price')
+const closedEntryEl = document.querySelector('#closed-entry');
+
 const closeAlert = async (e) =>{
     e.preventDefault();
+    if (e.target.hasAttribute('data-id')) {
+        const id = e.target.getAttribute('data-id')
+    
     const alertBody = {
-        user_id: 1,
-        closed_price: entryPriceEl.value,
+        // user_id: 1,
+        close_entry: closedEntryEl.value,
+        closed_price: closedPriceEl.value,
         status: "CLOSED",
         // profit_or_loss: eventDescription.value,
     };
-
     console.log(alertBody)
 
     // sending event details to the server using POST request
-    const fetchNewEvent = await fetch('/api/alert', {
-        method: 'POST',
+    const fetchNewEvent = await fetch(`/api/alert/${id}`, {
+        method: 'PUT',
         headers:{
             'content-type': 'application/json',
         },
         body: JSON.stringify(alertBody),
     });
-
-    //if the submission is successful then go to the users personal page
-    if(fetchNewEvent.ok){
-        document.location.replace('/');
-    }
-    //otherwise if it doesn't work then send text notification of error
-    else{
-        alert(fetchNewEvent.statusText);
-    }
+    document.location.replace('/');
+}
 }
 
-alertSubmitButton.addEventListener('click', closeAlert);
+closedButton.addEventListener('click', closeAlert);
+
+
+
