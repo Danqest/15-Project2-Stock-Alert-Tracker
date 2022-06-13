@@ -27,7 +27,7 @@ const sendInformation = async (e) => {
 
         if(response.status === 201) {
             localStorage.setItem('user', JSON.stringify(response.userInfo))
-            window.location.pathname = './login'
+            window.location.pathname = '/login'
         }
 
         createEmail.value = "";

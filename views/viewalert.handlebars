@@ -1,9 +1,4 @@
-
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-  {{#each alerts as |alert|}}
-  <div class="col">
-    <div class="card my-5" style="width: 18rem; ">
+<div class="card my-5" style="width: 18rem; ">
   <div class="card-body bg-success text-center">
     <h5 class="card-title ">{{ticker}} <span class="text-danger">({{status}})</span></h5>
   </div>
@@ -34,12 +29,45 @@
    {{/if}}
    <li class="list-group-item"><span for="img" aria-label="stoploss">✍️</span> Alert By: {{user.username}}</li>
   </ul>
-</div>
+  <div class="card-body text-center">
+      <button id="delete-alert" data-id="{{id}}"  type="button" class="btn btn-link" >Delete</button>
   </div>
-
-  {{/each}}
 </div>
+{{#if closed_price}} 
 
+{{else}}
 
+<section class="container">
+        <h1 class="text-center">Closing The Alert</h1>
+        <form class="form">
+            <table class="table border my-2">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Sell/Buy To Closed</th>
+            <th scope="col">Closed Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+                <select class="form-input" type="text" id="closed-entry" required>
+                    <option value="none" selected disabled hidden>SELECT AN OPTION</option>
+                    <option value="SELL TO CLOSE">Sell To Close</option>
+                    <option value="BUY TO CLOSE">Buy To Close</option>
+                </select>
+            </td>
+            <td>
+                <input class="form-input" type="text" id="closed-price" required />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+       <div class="form-group text-end">
+                <input id="close-alert-submit" data-id="{{id}}" class="btn btn-primary" type="submit" value="Submit">
+        </div>
+        </form>
+    </section>
+<script src='/js/closedalert.js'></script>
+{{/if}}
 
-
+<script src='/js/deletealert.js'></script>

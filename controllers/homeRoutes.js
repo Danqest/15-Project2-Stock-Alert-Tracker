@@ -3,9 +3,11 @@ const { Alert, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 const path=require('path')
 
+//homepage display routes
 routes.get('/',async (req,res)=>{
   try {
-    // Get all posts and JOIN with user data
+    
+    // Get all alerts and JOIN with user data
     const alertData = await Alert.findAll({
       include: [
         {
@@ -14,16 +16,19 @@ routes.get('/',async (req,res)=>{
         },
       ],
     });
+    
 
     // Serialize data so the template can read it
     const alerts = alertData.map((alert) => alert.get({ plain: true }));
 
 
     // Pass serialized data and session flag into template
-    console.log('alerts', alerts);
+    // console.log('alerts', alerts);
     res.render('homepage', {
       alerts,
-      logged_in: req.session.logged_in,
+      loggedIn: req.session.loggedIn,
+      closed_price: req.session.closed_price,
+      // user_id: req.session.user_id,
     });
 
   } catch (err) {
@@ -32,16 +37,62 @@ routes.get('/',async (req,res)=>{
   
   }
 });
+
 //get the login page from handlebars
 routes.get('/login',async (req,res)=>{
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
   res.render('login')
 })
+
 //get the signup page from handlebars
 routes.get('/signup',async (req,res)=>{
   res.render('signup')
 })
-// routes.get('/signup',(req,res)=>{
-//   res.sendFile(path.join(__dirname,'../views/signup.html'))
+routes.get('/alert', (req, res) => {
+  res.render('createalert', {
+    loggedIn: true,
+  });
+});
+//view alert by id routes
+routes.get('/alert/:id',withAuth, async (req, res) => {
+  const alertData = await Alert.findByPk(req.params.id, {
+    include: [
+      {
+        model: User,
+        attributes: ['username'],
+      },
+      // {
+      //   model: Comment,
+      //   include: {
+      //     model: User,
+      //     attributes: ['username'],
+      //   },
+      // },
+    ],
+  });
+// console.log( alertData)
+  const alert = alertData.get({ plain: true });
+  res.render('viewalert', {
+    ...alert,
+    loggedIN: true,
+  });
+});
+//closed the alert
+// routes.get("/close",async(req,res)=>{
+//   res.render('closealert', {
+//     loggedIn: req.session.loggedIn,
+//   })
 // })
+//get profile information routes
+routes.get("/profile",async(req,res)=>{
+  res.render('profile', {
+    loggedIn: req.session.loggedIn,
+  })
+})
+
+
 
 module.exports = routes;
