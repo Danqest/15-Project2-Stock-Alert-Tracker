@@ -1,11 +1,49 @@
+<div id="carouselExampleCaptions" class=" container carousel slide my-2" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./img/img3.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block text-dark">
+        <h5>Many years of Wall Street Expertise</h5>
+        <p>We help traders take the guesswork out of trading with real-time trade alerts that tell you exactly when to buy and when to sell. </p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="./img/img2.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block text-success">
+        {{!-- <h5>Second slide label</h5> --}}
+        <h5>
+          No trader is 100% right all the time, but we never hide our losing trades.</h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="./img/img1.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block text-dark">
+        <h5>  We take the wins with the losses & transparency is what makes us different.</h5>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<section class="container px-4">
+<div class="row row-cols-auto">
   {{#each alerts as |alert|}}
   <div class="col">
-    <div class="card my-5" style="width: 18rem; ">
+    <div class="card my-1" style="width: 18.3rem; ">
   <div class="card-body bg-success text-center">
-    <h5 class="card-title text-dark"><a data-id="{{id}}" href="/alert/{{alert.id}}">{{ticker}}</a> <span class="text-danger">({{status}})</span></h5>
+    <h5 class="card-title"><a class="unlink" data-id="{{id}}" href="/alert/{{alert.id}}"><span class="text-warning">{{ticker}}</span></a> <span class="text-danger">({{status}})</span></h5>
   </div>
   <ul class="list-group list-group-flush">
       <li class="list-group-item">
@@ -31,6 +69,9 @@
     <li class="list-group-item">
    <span for="img" aria-label="stoploss">⏱ Closed Time: </span>{{format_time updatedAt}}
    </li>
+   <li class="list-group-item">
+   <span for="img" aria-label="stoploss">⏱ Gain | Loss: </span>{{profit_or_loss}}%
+   </li>
    {{/if}}
    <li class="list-group-item"><span for="img" aria-label="stoploss">✍️</span> Alert By: {{user.username}}</li>
   </ul>
@@ -39,7 +80,7 @@
 
   {{/each}}
 </div>
-
+</section>
 
 
 

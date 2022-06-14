@@ -28,10 +28,11 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 // get specific Alert/ Alert page
-router.get('/:id', (req, res) => {
+router.get('/:id', withAuth,  (req, res) => {
   Alert.findOne({
     where: {
       id: req.params.id,
+      ticker: req.params.ticker,
     },
     
   })
@@ -51,6 +52,31 @@ router.get('/:id', (req, res) => {
       res.status(500).json(err);
     });
 });
+// get specific Alert/ Alert page
+router.get('/search/:ticker', (req, res) => {
+  Alert.findAll({
+    where: {
+      ticker: req.params.ticker,
+    },
+    
+  })
+    .then((results) => {
+      // if no results, respond with 404 and inform user no results found for that ID
+      if (!results) {
+        res.status(404).json({
+          message: `No Alert found with ID ${req.params.id} found. Please try again with a different ID.`,
+        });
+        return;
+      }
+      // else respond with results
+      res.json(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 
 // delete an Alert by id
 router.delete('/:id',withAuth, (req, res) => {
@@ -78,13 +104,13 @@ router.delete('/:id',withAuth, (req, res) => {
 });
 
 // update an Alert (we using this to closed the alert)
-router.put('/:id', (req, res) => {
+router.put('/:id', withAuth, (req, res) => {
   Alert.update(
     {
       close_entry: req.body.close_entry,
       closed_price: req.body.closed_price,
       status: req.body.status,
-      // profit_or_loss: req.body.profit_or_loss,
+      profit_or_loss: req.body.profit_or_loss,
     },
     {
       where: {

@@ -13,6 +13,7 @@ routes.get('/',async (req,res)=>{
         {
           model: User,
           attributes: ['username'],
+          // order: 'id desc'
         },
       ],
     });
@@ -53,7 +54,7 @@ routes.get('/signup',async (req,res)=>{
 })
 routes.get('/alert', (req, res) => {
   res.render('createalert', {
-    loggedIn: true,
+    loggedIn: req.session.loggedIn,
   });
 });
 //view alert by id routes
@@ -77,7 +78,7 @@ routes.get('/alert/:id',withAuth, async (req, res) => {
   const alert = alertData.get({ plain: true });
   res.render('viewalert', {
     ...alert,
-    loggedIN: true,
+    loggedIn: req.session.loggedIn,
   });
 });
 //closed the alert
@@ -92,6 +93,57 @@ routes.get("/profile",async(req,res)=>{
     loggedIn: req.session.loggedIn,
   })
 })
+
+//view alert by id routes
+routes.get('/alert/search/:ticker',withAuth, async (req, res) => {
+  const alertData = await Alert.findByPk(req.params.ticker, {
+    include: [
+      {
+        model: User,
+        attributes: ['username'],
+      },
+      // {
+      //   model: Comment,
+      //   include: {
+      //     model: User,
+      //     attributes: ['username'],
+      //   },
+      // },
+    ],
+  });
+console.log( alertData)
+  const alert = alertData.get({ plain: true });
+  res.render('search', {
+    ...alert,
+    // loggedIn: req.session.loggedIn,
+  });
+});
+// //searching routes 
+// routes.get('/search/:ticker', async (req, res) => {
+//   try {
+    
+//     const alertData = await Alert.findAll({
+//       where:{
+//         ticker: req.params.ticker,
+//       }
+//     });
+//     console.log(alertData)
+//     .then((results) => {
+//       // if no results, respond with 404 and inform user no results found for that ID
+//       if (!results) {
+//         res.status(404).json({
+//           message: `No Alert found with ID ${req.params.id} found. Please try again with a different ID.`,
+//         });
+//         return;
+//       }
+//       // else respond with results
+//       res.render('search');
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+
 
 
 
