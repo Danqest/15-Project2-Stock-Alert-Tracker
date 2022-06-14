@@ -16,7 +16,7 @@
   <body>
     <nav class="container navbar navbar-expand-lg navbar-light border-bottom">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">Stock Alert Tracker</a>
+        <a class="navbar-brand" href="/"><img class="rounded-circle" src="./img/logo.png" width="80" height="60" alt=""></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -53,14 +53,15 @@
             {{/if}}
 
           </ul>
-          <form class="d-flex">
+          
+          <form class="d-flex" type="search" action="/search" id="search-form">
             <input
               class="form-control me-2"
               type="search"
               placeholder="AAPL, TSLA, AMZN..."
               aria-label="Search"
             />
-            <button class="btn btn-outline-success" type="submit">
+            <button class="btn btn-outline-success" type="submit" id="search-btn">
               Search
             </button>
           </form>

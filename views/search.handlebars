@@ -1,0 +1,35 @@
+<div class="card my-5" style="width: 18rem; ">
+  <div class="card-body bg-success text-center">
+    <h5 class="card-title ">{{ticker}} <span class="text-danger">({{status}})</span></h5>
+  </div>
+  <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+   <span for="img" aria-label="stoploss">📅 Open Day: </span>{{format_date createdAt}}
+   </li>
+   <li class="list-group-item">
+   <span for="img" aria-label="stoploss">⏰ Open At: </span>{{format_time createdAt}}
+   </li>
+    <li class="list-group-item"><span for="img" aria-label="price">🛍</span> Open : {{entry}}</li>
+    <li class="list-group-item"><span for="img" aria-label="price">💲</span> Entry Price: {{entry_price}}</li>
+    <li class="list-group-item"><span for="img" aria-label="target">🎯</span> Target: {{target}}</li>
+    <li class="list-group-item"><span for="img" aria-label="stoploss">🛑</span> Stoploss: {{stoploss}}</li>
+   {{#if closed_price}} 
+   <li class="list-group-item bg-warning">
+   </li>
+    <li class="list-group-item"><span for="img" aria-label="price">🛍</span> {{close_entry}}</li>
+   <li class="list-group-item"><span for="img" aria-label="stoploss">💰</span>Closed Price: {{closed_price}}</li>
+   
+   
+   <li class="list-group-item">
+   <span for="img" aria-label="stoploss">🗓 Closed Day: </span>{{format_date updatedAt}}
+   </li>
+    <li class="list-group-item">
+   <span for="img" aria-label="stoploss">⏱ Closed Time: </span>{{format_time updatedAt}}
+   </li>
+   {{/if}}
+   <li class="list-group-item"><span for="img" aria-label="stoploss">✍️</span> Alert By: {{user.username}}</li>
+  </ul>
+  <div class="card-body text-center">
+      <button id="delete-alert" data-id="{{id}}"  type="button" class="btn btn-link" >Delete</button>
+  </div>
+</div>
