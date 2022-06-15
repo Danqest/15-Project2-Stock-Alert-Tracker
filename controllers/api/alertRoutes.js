@@ -52,30 +52,30 @@ router.get('/:id', withAuth,  (req, res) => {
       res.status(500).json(err);
     });
 });
-// get specific Alert/ Alert page
-router.get('/search/:ticker', (req, res) => {
-  Alert.findAll({
-    where: {
-      ticker: req.params.ticker,
-    },
+// // get specific Alert/ Alert page
+// router.get('/search/:ticker', (req, res) => {
+//   Alert.findAll({
+//     where: {
+//       ticker: req.params.ticker,
+//     },
     
-  })
-    .then((results) => {
-      // if no results, respond with 404 and inform user no results found for that ID
-      if (!results) {
-        res.status(404).json({
-          message: `No Alert found with ID ${req.params.id} found. Please try again with a different ID.`,
-        });
-        return;
-      }
-      // else respond with results
-      res.json(results);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+//   })
+//     .then((results) => {
+//       // if no results, respond with 404 and inform user no results found for that ID
+//       if (!results) {
+//         res.status(404).json({
+//           message: `No Alert on ${req.params.ticker} ticter yet!.`,
+//         });
+//         return;
+//       }
+//       // else respond with results
+//       res.json(results);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
 
 
 // delete an Alert by id

@@ -30,6 +30,7 @@
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.16",
     "sequelize": "^6.20.1",
-    "twilio": "^3.77.2"
+    "twilio": "^3.77.2",
+    "yahoo-finance": "^0.3.7"
   }
 }
