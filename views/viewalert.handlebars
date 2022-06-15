@@ -1,6 +1,12 @@
-<div class="card my-5" style="width: 18rem; ">
-  <div class="card-body bg-success text-center">
-    <h5 class="card-title ">{{ticker}} <span class="text-danger">({{status}})</span></h5>
+<div class="card my-3" style="width: 18rem; ">
+  <div class="card-body bg-light text-center">
+    <h5 class="card-title text-dark ">{{ticker}} 
+       {{#if closed_price}}
+      <span class="text-danger">({{status}})</span>
+      {{else}}
+       <span class="text-success">({{status}})</span>
+      {{/if}}
+    </h5>
   </div>
   <ul class="list-group list-group-flush">
       <li class="list-group-item">
@@ -29,44 +35,45 @@
    {{/if}}
    <li class="list-group-item"><span for="img" aria-label="stoploss">✍️</span> Alert By: {{user.username}}</li>
   </ul>
+  {{#if canDelete}}
   <div class="card-body text-center">
       <button id="delete-alert" data-id="{{id}}"  type="button" class="btn btn-link" >Delete</button>
+      
   </div>
+  {{/if}}
 </div>
 {{#if closed_price}} 
 
 {{else}}
-
+  {{#if canDelete}}
+  <hr>
 <section class="container">
-        <h1 class="text-center">Closing The Alert</h1>
-        <form class="form">
-            <table class="table border my-2">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">Sell/Buy To Closed</th>
-            <th scope="col">Closed Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-                <select class="form-input" type="text" id="closed-entry" required>
-                    <option value="none" selected disabled hidden>SELECT AN OPTION</option>
-                    <option value="SELL TO CLOSE">Sell To Close</option>
-                    <option value="BUY TO CLOSE">Buy To Close</option>
-                </select>
-            </td>
-            <td>
-                <input class="form-input" type="text" id="closed-price" required />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-       <div class="form-group text-end">
-                <input id="close-alert-submit" data-id="{{id}}" class="btn btn-primary" type="submit" value="Submit">
-        </div>
-        </form>
+<div class="col">
+    <div class="card my-1" style="width: 18.3rem; ">
+  <div class="card-body bg-light text-center">
+      <h3 class="card-title text-center">Closed Your Alert!</h3>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><span for="img" aria-label="price">🛍</span> 
+    <select class="form-input" type="text" id="closed-entry" required>
+            <option value="none" selected disabled hidden>SELECT AN OPTION</option>
+            <option value="SELL TO CLOSE">Sell To Close ⬆</option>
+            <option value="BUY TO CLOSE">Buy To Close ⬇</option>
+    </select>
+    <li class="list-group-item"><span for="img" aria-label="price">💲</span> Enter Close Price: <input class="form-input" type="text" id="closed-price" required />
+    </li>
+    <li class="list-group-item">
+      <input id="close-alert-submit" data-id="{{id}}" class="btn btn-primary text-end" type="submit" value="Submit">
+    </li>
+    
+  </ul>
+</div>
+  </div>
+       
     </section>
+    {{ else}}
+    <center> Only <b>{{user.username}}</b> can closed this alert</center>
+      {{/if}}
 <script src='/js/closedalert.js'></script>
 {{/if}}
 

@@ -17,17 +17,14 @@ routes.get('/',async (req,res)=>{
         },
       ],
     });
-    
-
     // Serialize data so the template can read it
     const alerts = alertData.map((alert) => alert.get({ plain: true }));
-
-
     // Pass serialized data and session flag into template
     // console.log('alerts', alerts);
     res.render('homepage', {
       alerts,
       loggedIn: req.session.loggedIn,
+      userID: req.session.user_id,
       closed_price: req.session.closed_price,
       // user_id: req.session.user_id,
     });
@@ -35,7 +32,6 @@ routes.get('/',async (req,res)=>{
   } catch (err) {
     console.log(err)
     res.status(500).json(err);
-  
   }
 });
 
@@ -78,73 +74,119 @@ routes.get('/alert/:id',withAuth, async (req, res) => {
   const alert = alertData.get({ plain: true });
   res.render('viewalert', {
     ...alert,
+    canDelete: alert.user_id === req.session.user_id,
     loggedIn: req.session.loggedIn,
   });
 });
-//closed the alert
-// routes.get("/close",async(req,res)=>{
-//   res.render('closealert', {
-//     loggedIn: req.session.loggedIn,
-//   })
-// })
-//get profile information routes
-routes.get("/profile",async(req,res)=>{
-  res.render('profile', {
-    loggedIn: req.session.loggedIn,
-  })
-})
 
-//view alert by id routes
-routes.get('/alert/search/:ticker',withAuth, async (req, res) => {
-  const alertData = await Alert.findByPk(req.params.ticker, {
-    include: [
-      {
-        model: User,
-        attributes: ['username'],
-      },
-      // {
-      //   model: Comment,
-      //   include: {
-      //     model: User,
-      //     attributes: ['username'],
-      //   },
-      // },
-    ],
-  });
-console.log( alertData)
-  const alert = alertData.get({ plain: true });
-  res.render('search', {
-    ...alert,
-    // loggedIn: req.session.loggedIn,
-  });
+//get the profile page from handlebars
+routes.get('/profile',withAuth, async (req,res)=>{
+  res.render('profile')
+})
+//get profile information by id 
+routes.get('/profile/:id',withAuth, (req, res) => {
+  User.findAll({
+    attributes: { exclude: ['password'] },
+    where: {
+      id: req.params.id,
+    },
+
+  })
+    .then((results) => {
+      // if no results, respond with 404 and inform user no results found for that ID
+      if (!results) {
+        res.status(404).json({
+          message: `No username exit!.`,
+        });
+        return;
+      }
+      // else respond with results
+      // res.json(results);
+      // console.log(results);
+      const ids = results.map((id) => id.get({ plain: true }));
+      
+      res.render('profile' , {
+        ids,
+        loggedIn: req.session.loggedIn,
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
-// //searching routes 
-// routes.get('/search/:ticker', async (req, res) => {
-//   try {
+
+// //search alert by profile id 
+// routes.get('/user/:id', (req, res) => {
+//   Alert.findAll({
     
-//     const alertData = await Alert.findAll({
-//       where:{
-//         ticker: req.params.ticker,
-//       }
-//     });
-//     console.log(alertData)
+//     where: {
+//       id: req.params.user_id,
+//     },
+//     include: { 
+//       model: User,
+//       attributes: ['username'],
+//     }
+    
+//   })
 //     .then((results) => {
 //       // if no results, respond with 404 and inform user no results found for that ID
 //       if (!results) {
 //         res.status(404).json({
-//           message: `No Alert found with ID ${req.params.id} found. Please try again with a different ID.`,
+//           message: `No Alert ticter found!.`,
 //         });
 //         return;
 //       }
 //       // else respond with results
-//       res.render('search');
+//       res.json(results);
+//       const alerts = results.map((alert) => alert.get({ plain: true }));
+//       // console.log(results);
+//       res.render('profile' , {
+//         alerts,
+//         loggedIn: req.session.loggedIn,
+//       })
 //     })
 //     .catch((err) => {
 //       console.log(err);
 //       res.status(500).json(err);
 //     });
+// });
 
-
+//search the by ticker routes
+routes.get('/search/:ticker',withAuth, (req, res) => {
+  Alert.findAll({
+    
+    where: {
+      ticker: req.params.ticker,
+    },
+    include: { 
+      model: User,
+      attributes: ['username'],
+    }
+    
+  })
+    .then((results) => {
+      // if no results, respond with 404 and inform user no results found for that ID
+      if (!results) {
+        res.status(404).json({
+          message: `No Alert on ${req.params.ticker} ticter found!.`,
+        });
+        return;
+      }
+      // else respond with results
+      // res.json(results);
+      const tickers = results.map((ticker) => ticker.get({ plain: true }));
+      // console.log(results);
+      res.render('search' , {
+        tickers,
+        loggedIn: req.session.loggedIn,
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 
 module.exports = routes;

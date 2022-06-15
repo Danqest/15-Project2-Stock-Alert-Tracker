@@ -38,12 +38,22 @@
 </div>
 
 <section class="container px-4">
-<div class="row row-cols-auto">
+<div class="row row-cols-auto ">
   {{#each alerts as |alert|}}
   <div class="col">
     <div class="card my-1" style="width: 18.3rem; ">
-  <div class="card-body bg-success text-center">
-    <h5 class="card-title"><a class="unlink" data-id="{{id}}" href="/alert/{{alert.id}}"><span class="text-warning">{{ticker}}</span></a> <span class="text-danger">({{status}})</span></h5>
+  <div class="card-body bg-light text-center">
+    <h5 class="card-title">
+      <a class="unlink" data-id="{{id}}" href="/alert/{{alert.id}}">
+      <span class="text-dark">{{ticker}}</span>
+      </a> 
+      {{#if closed_price}}
+      <span class="text-danger">({{status}})</span>
+      {{else}}
+       <span class="text-success">({{status}})</span>
+      {{/if}}
+
+    </h5>
   </div>
   <ul class="list-group list-group-flush">
       <li class="list-group-item">
