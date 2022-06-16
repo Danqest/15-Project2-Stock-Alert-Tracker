@@ -6,6 +6,9 @@ const routes = require('./controllers');
 const helpers = require('./utils/helpers');
 // const twilio = require('twilio');
 
+const yahooFinance = require('yahoo-finance');
+const { QueryTypes } = require('sequelize')
+
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const token = process.env.TWILIO_AUTH_TOKEN;
