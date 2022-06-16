@@ -96,7 +96,7 @@ async function dbPriceUpdate() {
 
 
 // timer interval for every X minutes to run the query, scrape, & update function above 
-var minutesLeft = 2
+var minutesLeft = 10
 function runTimer() {
   console.log('\x1b[33m%s\x1b[0m', minutesLeft + " minutes before ticker price quotes are updated...")
   var timerInterval = setInterval(function() {
@@ -106,7 +106,7 @@ function runTimer() {
     if(minutesLeft <=0) {
         dbPriceUpdate()
         clearInterval(timerInterval)
-        minutesLeft = 2
+        minutesLeft = 10
         // self-referencing function for continuous looping
         runTimer()
     }
