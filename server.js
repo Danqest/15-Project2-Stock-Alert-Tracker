@@ -1,3 +1,4 @@
+// initialize all required packages
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -55,14 +56,18 @@ sequelize.sync({ force: false }).then(() => {
 
 // app.listen(PORT, () => console.log('Now listening'));
 
+
+// function to update db ticker prices with live quotes
 async function dbPriceUpdate() {
   var tickerList = [];
   var priceList = [];
   
+  // query db for all tickers
   const tickersObj = await sequelize.query("SELECT ticker FROM alert", { type: QueryTypes.SELECT})
 
   console.log('\x1b[33m%s\x1b[0m', "Querying database for tickers...")
 
+  // add tickers from query to array to be used by scraper package
   for (let i = 0; i < tickersObj.length; i++) {
     console.log(tickersObj[i].ticker)
     tickerList.push(tickersObj[i].ticker)
@@ -71,6 +76,7 @@ async function dbPriceUpdate() {
   console.log(tickerList)
   console.log('\x1b[33m%s\x1b[0m', "Scraping current ticker price quotes...")
 
+  // use yahoo-finance package to scrape live quote data from ticker array and push to price array
   for (let j=0; j < tickerList.length; j++) {
     var yf = await yahooFinance.quote(tickerList[j], ['price'])
     console.log(yf.price.regularMarketPrice)
@@ -80,6 +86,7 @@ async function dbPriceUpdate() {
   console.log(priceList)
   console.log('\x1b[33m%s\x1b[0m', "Updating database...")
 
+  // update db with new prices
   for (let k=0; k < tickerList.length; k++) {
     await sequelize.query(("UPDATE alert SET current_price = " + priceList[k] + " WHERE ticker = '" + tickerList[k] + "'"), { type: QueryTypes.UPDATE})
   }
@@ -87,6 +94,8 @@ async function dbPriceUpdate() {
   console.log('\x1b[33m%s\x1b[0m', "Database updated, resetting scraper timer...")
 }
 
+
+// timer interval for every X minutes to run the query, scrape, & update function above 
 var minutesLeft = 2
 function runTimer() {
   console.log('\x1b[33m%s\x1b[0m', minutesLeft + " minutes before ticker price quotes are updated...")
@@ -98,9 +107,11 @@ function runTimer() {
         dbPriceUpdate()
         clearInterval(timerInterval)
         minutesLeft = 2
+        // self-referencing function for continuous looping
         runTimer()
     }
-  }, 60000)
+  }, 60000) // 60000ms for a 1 minute interval
 }
 
+// initialize first run of interval
 runTimer()
