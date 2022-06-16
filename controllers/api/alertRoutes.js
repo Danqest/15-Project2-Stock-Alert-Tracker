@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
   Alert.findAll({})
     .then((results) => {
       res.json(results);
+
     })
     .catch((err) => {
       console.log(err);
@@ -15,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 // create an Alert
-router.post('/', withAuth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newAlert = await Alert.create({
       ...req.body,
@@ -28,11 +29,11 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 // get specific Alert/ Alert page
-router.get('/:id', withAuth,  (req, res) => {
+router.get('/:id',  (req, res) => {
   Alert.findOne({
     where: {
       id: req.params.id,
-      ticker: req.params.ticker,
+      // ticker: req.params.ticker,
     },
     
   })
@@ -46,6 +47,8 @@ router.get('/:id', withAuth,  (req, res) => {
       }
       // else respond with results
       res.json(results);
+      // const tickers = results.map((id) => id.get({ plain: true }));
+      console.log(results)
     })
     .catch((err) => {
       console.log(err);

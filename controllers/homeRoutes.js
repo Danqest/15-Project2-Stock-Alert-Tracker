@@ -2,7 +2,7 @@ const routes = require('express').Router();
 const { Alert, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 const path=require('path')
-
+const yahooFinance = require('yahoo-finance');
 //homepage display routes
 routes.get('/',async (req,res)=>{
   try {
@@ -188,5 +188,24 @@ routes.get('/search/:ticker',withAuth, (req, res) => {
     });
 });
 
-
+//get the current price from yahoo
+routes.get('/price', (req, res) => {
+  const symbol = req.query.symbol;
+  if (!symbol) {
+      return res.status(404).send('Not found');
+  }
+  yahooFinance.quote({
+      symbol: symbol,
+      modules: ['financialData']
+  }, (err, quotes) => {
+      if (quotes && quotes.financialData && quotes.financialData.currentPrice) {
+          res.send({
+              symbol: symbol,
+              price: quotes.financialData.currentPrice
+          });
+      } else {
+          return res.status(404).send('Not found');
+      }
+  });
+})
 module.exports = routes;

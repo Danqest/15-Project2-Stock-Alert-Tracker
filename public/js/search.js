@@ -1,7 +1,7 @@
 // login DOM
 const searchEl = document.getElementById('search-ticker');
 const searchButton = document.getElementById('search-btn');
-
+const currentPrice = document.getElementById('symbol-list');
 
 const sendSearch = async (e) => {
     e.preventDefault();
