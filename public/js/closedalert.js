@@ -34,7 +34,7 @@ function getApiData(id) {
         profit_or_loss: profit_percent,
       };
   
-      // sending event details to the server using POST request
+      // sending event details to the server using PUt request
       const fetchNewEvent = await fetch(`/api/alert/${id}`, {
         method: 'PUT',
         headers: {

@@ -114,4 +114,32 @@ router.post('/logout', (req, res) => {
   }
 });
 
+
+// update an user (we using this to closed the alert)
+router.put('/:id', (req, res) => {
+  User.update(
+    {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      // phone: req.body.phone,
+    },
+    {
+      where: {
+        id: req.params.id,
+        // user_id: req.session.user_id,
+      },
+    }
+  )
+  .then((results) => {
+    res.json({
+      message: 'profile update successfully',
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+});
+
 module.exports = router;
