@@ -58,11 +58,15 @@ NO TEST THIS TIME
 ```
 
 ## Demo
-![imagename]()
 
-[Click here] () 
+[Click here] (https://lit-waters-98495.herokuapp.com) 
 
-![imagename]()
+![imagename](./public/img/demo1.png)
+![imagename](./public/img/demo2.png)
+![imagename](./public/img/demo3.png)
+![imagename](./public/img/demo4.png)
+![imagename](./public/img/demo5.png)
+
 
 
 ## Questions
@@ -70,4 +74,8 @@ NO TEST THIS TIME
 If you have questions about this repository reach me by Github: 
 
 ## License
+Colin Brooks
+Tu Nguyen
+Charnay Birton
+Harris Ai
 
