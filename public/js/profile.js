@@ -12,7 +12,7 @@ const profileSubmitButton = document.querySelector('#change-profile')
         // user_id: 1,
         username: usernameEL.value,
         email: emailEL.value,
-        // password: passwordEL.value,
+        password: passwordEL.value,
       };
   
       // sending event details to the server using PUT request
