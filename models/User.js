@@ -26,9 +26,9 @@ User.init ({
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-        // validate: {
-        //     len: [10],
-        //   },
+        validate: {
+          len: [8],
+        }
     },
     email: {
         type: DataTypes.STRING,

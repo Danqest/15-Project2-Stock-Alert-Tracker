@@ -44,4 +44,4 @@ const createAlert = async (e) =>{
 }
 
 //on submit button being clicked then add the details.
-alertSubmitButton.addEventListener('click', createAlert);
+alertSubmitButton.addEventListener('submit', createAlert);
