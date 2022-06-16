@@ -2,45 +2,33 @@
 {{#each ids as |profile|}}
 <div class="row">
   <div class="col-auto">
-    <h2>Hello, {{profile.username}}!</h2>
+    <h2>Hello, <a data-id="{{id}}" href="/profile/{{profile.id}}"></a>{{profile.username}}!</h2>
   </div>
 </div>
-{{/each}}
+
 <div class="row mt-4">
   <div class="col-md-6">
-    <h3>Change Your Username:</h3>
+    <h3>Change Your Information Below</h3>
 
-    <form class="form">
+  <form>
       <div class="form-group">
         <label for="">Username:</label>
         <input class="form-input" type="text" id="user-name" name="user-name" />
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input class="form-input" id="change-password" name="project-desc"></input>
+        <input class="form-input" id="change-email" name="project-desc"></input>
+      </div>
+       <div class="form-group">
+        <label for="pass">Pass:</label>
+        <input class="form-input" id="change-pass" required=""></input>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update Profile</button>
+        <button id="change-profile" data-id="{{id}}" type="submit" class="btn btn-primary">Update Profile</button>
       </div>
-    </form>
+   </form>
   </div>
 
-  {{#if projects.length}}
-  <div class="col-md-6 project-list">
-    <h3>Current Projects:</h3>
+  {{/each}}
 
-    {{#each projects as |project|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/project/{{project.id}}">{{project.name}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{project.id}}">DELETE</button>
-      </div>
-    </div>
-    {{/each}}
-  </div>
-  {{/if}}
-</div>
-
-<script src="./js/profile.js"></script>
+<script src="/js/profile.js"></script>

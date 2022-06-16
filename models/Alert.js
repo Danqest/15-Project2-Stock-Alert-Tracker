@@ -33,15 +33,15 @@ class Alert extends Model {}
             //     allowNull: false,
             // }, 
             entry_price: { 
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
                 allowNull: false,
             },
             target: { 
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
                 allowNull: false,
             },
             stoploss: { 
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
                 allowNull: false,
             },
             // current_price:{
@@ -53,7 +53,7 @@ class Alert extends Model {}
                 allowNull: false,
             }, 
             closed_price:{
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
                 allowNull: true,
                 defaultValue: false,
             },
@@ -66,7 +66,7 @@ class Alert extends Model {}
             //     allowNull: false,
             //   },
               profit_or_loss: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.FLOAT,
                 allowNull: true,
             },
             user_id: {
