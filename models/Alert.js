@@ -36,6 +36,10 @@ class Alert extends Model {}
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
+            current_price: { 
+                type: DataTypes.FLOAT,
+                allowNull: true,
+            },
             target: { 
                 type: DataTypes.INTEGER,
                 allowNull: false,
